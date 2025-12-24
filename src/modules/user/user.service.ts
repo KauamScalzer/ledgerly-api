@@ -17,6 +17,10 @@ export class UserService {
     return this.userRepository.findByGoogleSub(googleSub);
   }
 
+  async findById(id: number): Promise<User | null> {
+    return this.userRepository.findById(id);
+  }
+
   async upsertFromGoogleProfile(profile: GoogleProfile): Promise<User> {
     const { googleSub, email, name } = profile;
 

@@ -19,6 +19,10 @@ export class UserRepository {
     return this.repository.findOne({ where: { email } });
   }
 
+  findById(id: number): Promise<User | null> {
+    return this.repository.findOne({ where: { id } });
+  }
+
   save(user: User): Promise<User> {
     return this.repository.save(user);
   }
