@@ -19,4 +19,4 @@ RUN pnpm install --prod --frozen-lockfile
 COPY --from=build /app/dist ./dist
 
 EXPOSE 3000
-CMD ["node", "dist/main.js"]
+CMD ["sh", "-c", "pnpm exec typeorm -d dist/database/data-source.js migration:run && node dist/main.js"]
