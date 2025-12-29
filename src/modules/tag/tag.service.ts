@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 
 import { Tag } from './entities/tag.entity';
 import { TagRepository } from './tag.repository';
@@ -8,6 +8,11 @@ export class TagService {
   constructor(private readonly tagRepository: TagRepository) {}
 
   async create(data: { ownerUserId: number; name: string }): Promise<Tag> {
+    const exists = await this.tagRepository.findByOwnerAndName(data.ownerUserId, data.name);
+    if (exists) {
+      throw new ConflictException('Tag já existe para este usuário');
+    }
+
     const tag = this.tagRepository.create(data);
     return this.tagRepository.save(tag);
   }

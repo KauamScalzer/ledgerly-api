@@ -29,4 +29,12 @@ export class TagRepository {
       order: { name: 'ASC' },
     });
   }
+
+  findByOwnerAndName(ownerUserId: number, name: string): Promise<Tag | null> {
+    return this.repository.findOne({ where: { ownerUserId, name } });
+  }
+
+  findByOwnerAndId(ownerUserId: number, tagId: number): Promise<Tag | null> {
+    return this.repository.findOne({ where: { ownerUserId, id: tagId } });
+  }
 }
